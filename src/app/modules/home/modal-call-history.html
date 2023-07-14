@@ -1,0 +1,67 @@
+<cp-alert *ngIf="alertFlag" [alertStatus]="alertStatus"></cp-alert>
+<kendo-tabstrip>
+    <kendo-tabstrip-tab [title]="'Recents'" [selected]="true">
+        <ng-template kendoTabContent>
+
+            <div class="row" style="margin: 0px;margin-top: 10px;">
+                <div class="col-md-3 col-sm-3 col-xs-3" style="padding-top: 20px;">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="Date" placeholder="Date" [(ngModel)]="DateVal">
+                        <mat-datepicker-toggle matSuffix [for]="Date"></mat-datepicker-toggle>
+                        <mat-datepicker #Date></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3" style="text-align: center;padding-top: 27px;">
+                    <button *ngIf="!loadSearchtBtn" mat-raised-button color="primary" (click)="onSubmit()">Search
+                    </button>
+                    <button *ngIf="loadSearchtBtn" mat-raised-button color="primary"
+                        (click)="onStopSearch()">Stop
+                    </button>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: center;">
+                    <figure>
+                        <figcaption>{{downloadmessage}}</figcaption>
+                        <audio #audioOption controls src="{{VoiceSrc}}"></audio>
+                    </figure>
+                </div>
+            </div>
+            <div class="row" style="padding-left: 15px;">
+                <input style="margin-right: 20px;" [ngModel]="filterText" *ngIf="gridApi"
+                    (ngModelChange)="gridApi.setQuickFilter($event)" placeholder="Filter ..." />
+            </div>
+            <ag-grid-angular #logGrid style="width: 100%; height: 50vh;" class="ag-theme-balham"
+                [columnDefs]="columnDefs" 
+                [defaultColDef]="defaultColDef" 
+                [rowData]="rowData"
+                (gridReady)="onGridReady($event)" 
+                (cellClicked)="cellClicked($event)" 
+                [autoGroupColumnDef]="autoGroupColumnDef"
+                [rowGroupPanelShow]="rowGroupPanelShow">
+            </ag-grid-angular>
+
+        </ng-template>
+    </kendo-tabstrip-tab>
+    <kendo-tabstrip-tab [title]="'Contacts'">
+        <ng-template kendoTabContent>
+            <input style="margin-right: 20px;" [ngModel]="filterText" *ngIf="gridApiCFBtelAgents"
+            (ngModelChange)="gridApiCFBtelAgents.setQuickFilter($event)" placeholder="Filter ..." />
+
+            <ag-grid-angular #logGrid style="width: 100%; height: 60vh;" class="ag-theme-balham"
+                [columnDefs]="columnDefsCFBtelAgents" 
+                [defaultColDef]="defaultColDef" 
+                [rowData]="CFBtelAgentsData"
+                (gridReady)="onGridReadyCFBtelAgents($event)" 
+                [autoGroupColumnDef]="autoGroupColumnDef"
+                [rowGroupPanelShow]="rowGroupPanelShow">
+            </ag-grid-angular>
+        </ng-template>
+    </kendo-tabstrip-tab>
+</kendo-tabstrip>
+<div class="row">
+    <span style="margin-left: 15px;margin-top: 13px;">Phone Number : </span>
+    <input name="somename" [(ngModel)]="telNoVal" class="telNo-textbox"
+      oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+      type="number" maxlength="12" />
+    <i class="flaticon-phone-auricular dial-style" (click)="getDial(telNoVal)"></i>
+
+  </div>

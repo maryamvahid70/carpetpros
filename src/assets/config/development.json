@@ -1,0 +1,12 @@
+{
+    "currentVersion": "1.1.3.10",
+    "BaseUrl": "https://37.32.12.207/BPMSAPIService/api",
+    "SignalRBaseUrl": "https://37.32.12.207/BPMSAPIService",
+    "BaseUrlToken": "https://37.32.12.207/BPMSAPIService/Token",
+    "BaseUrlReport": "https://37.32.12.207/HomeDepotAPIService",
+    "BaseUrlCFBTEL": "https://6910pbx.cfbtel.us:5732/api",
+    "lwUrl":"https://customers.thecarpetpros.com/?OrderNo=",
+    "BaseUrlWiki": "http://216.34.250.189:8080/bin/view/",
+    "Schedule": "https://cpweb.thecarpetpros.com/Logon?View=Segment&ReqID=",
+    "CallCenterAPI": "https://tm.thecarpetpros.com/BPMSAPIService/api/CallCenter/Call?"
+}

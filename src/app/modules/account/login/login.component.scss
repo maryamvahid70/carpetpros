@@ -1,0 +1,75 @@
+.div-login-style{
+    margin: auto;
+    width: 32%;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 10px 10px 50px;
+    border-radius: 5px;
+    padding-bottom: 50px;
+    min-width: 280px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn-submit-style{
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #5cb85c;
+    width: 80px;
+    color: white;
+    outline: none;
+}
+
+.alert-style{
+    width: fit-content;
+    margin: 20px;
+}
+
+.required-style{
+    color: red;
+    font-weight: bold;
+    font-size: smaller;
+}
+
+.input-style{
+    font-size: unset;
+}
+
+.span-float-rtl{
+    float: right;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-size: 15px;
+    margin: 3px;
+}
+
+@media only screen and (max-width: 768px) {
+input-style{
+    margin-left: 15px;
+}
+}
+
+.div-responsive{
+    padding-right: 0;
+    padding-left: 7px;
+}
+
+.version-style{
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.a-signUp{
+    cursor: pointer;
+    color: #007bff !important;
+    hover{
+        font-weight: bold;
+        text-decoration: underline;
+    }
+}
+

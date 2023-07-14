@@ -1,0 +1,56 @@
+
+<div class="login-main div-login-style">
+    <div *ngIf="isError" class="alert-style">
+      <cp-alert [alertStatus]="alert"></cp-alert>
+    </div>
+    <img style="margin: 15px;" src="data:image/png;base64,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">
+    <br>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+      <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4 div-responsive">
+            <span>
+              <i class="flaticon-user-silhouette"></i>
+            <label for="username">Username : </label>
+            </span>
+          </div>
+          <div class="col-md-7 col-sm-12 col-xs-12" style="padding:0px">
+            <input formControlName="username" id="username" name="username" class="form-control input-style" [ngClass]="{ 'is-invalid': submitted && loginForm.get('username')?.errors }" #username type="text" style="width:100%" >
+            <div *ngIf="submitted && loginForm.get('username')?.errors" class="invalid-feedback">
+                <div *ngIf="loginForm.get('username')?.errors?.['required']" class="required-style">Username is required</div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+      <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4 div-responsive">
+            <span>
+              <i class="flaticon-lock"></i>
+              <label for="password">Password : </label>
+            </span>
+          </div>
+          <div class="col-md-7 col-sm-12 col-xs-12" style="padding:0px">
+            <input formControlName="password" class="form-control input-style" [ngClass]="{ 'is-invalid': submitted && loginForm.get('password')?.errors }" #password type="password" style="width:100%" required>
+            <div *ngIf="submitted && loginForm.get('password')?.errors" class="invalid-feedback">
+                <div *ngIf="loginForm.get('password')?.errors?.['required']" class="required-style">Password is required</div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+      <button [disabled]="loading" class="btn-submit-style btn btn-primary" >
+        Login
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+      </button>
+      </div>
+    </form>
+    <div>
+      <a (click)="signUpClick()" class="a-signUp">Sign Up</a>
+    </div>
+    <span class="version-style">Version : {{currentVersion}}</span>
+
+  </div>
+  
+  

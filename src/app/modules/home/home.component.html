@@ -1,0 +1,900 @@
+<div class="row site-header" [class.header-store-style]="SegmentationTypeId==4">
+
+    <div style="padding: 6px;">
+        <span style="margin: 0px">Role : </span>
+        <select [(ngModel)]="RoleVal" (change)="onChangeRole($event)">
+            <option *ngFor="let item of roleList" value="{{item.Id}}">{{item.RoleName}}</option>
+        </select>
+    </div>
+    <span *ngIf="SegmentationTitle && SegmentationTypeName" class="headerSite-span">{{SegmentationTitle}} :
+        {{SegmentationTypeName}}</span>
+    <span class="headerSite-span split">|</span>
+    <span class="headerSite-span">User : {{userName}}</span>
+    <span class="headerSite-span split">|</span>
+    <span class="headerSite-span">{{fullName}}</span>
+    <span class="headerSite-span split">|</span>
+    <span class="headerSite-span">Version : {{currentVersion}}</span>
+
+    <div *ngIf="punchSttValue && punchSttValue.WarningMessage!=''" class="punch-warning-box">
+        <span>{{punchSttValue.WarningMessage}}</span>
+    </div>
+
+    <div class="example-config">
+        <i class="flaticon-account-1 header-flaticon-account-1" #anchor (click)="onToggle()"></i>
+        <i *ngIf="SegmentationTypeId ==4" class="flaticon-question help-icon" (click)="onHelp()" title="Help"></i>
+    </div>
+    <div *ngIf="SegmentationTypeId ==4" (click)="contactUsClick()" class="header-flaticon-speech-bubble"
+        style="right: 70px;">
+        <i class="flaticon-speech-bubble" title="Contact Us"></i>
+        <span style="position: relative;bottom: 2px;">Contact Us</span>
+    </div>
+    <div *ngIf="isShowContact" class="contact-us-box">
+        <h3>{{officeInfoList[0].Name}}</h3><br>
+        <div>
+            <address>
+                <dl>
+                    <dt>{{officeInfoList[0].Address}}</dt><br>
+                    <dd><i class="flaticon-phone-auricular"></i><span>Telephone:</span>{{officeInfoList[0].Phone1}}</dd>
+                    <dd *ngIf="officeInfoList[0].Phone2 != ''"><i
+                            class="flaticon-phone-auricular"></i><span>Telephone:</span>{{officeInfoList[0].Phone2}}
+                    </dd>
+                    <dd style="margin-left: 15px;"><i
+                            class="flaticon-newspaper"></i><span>FAX:</span>{{officeInfoList[0].Fax}}</dd>
+                    <dd><i class="flaticon-email"></i>E-mail: <a href="#" class="link-1">{{officeInfoList[0].Email}}</a>
+                    </dd>
+                </dl>
+            </address>
+            <br>
+            <i class="flaticon-calendar-2"></i><strong>Hours of Operation:</strong>
+            <address style="margin-left: 40px;">
+                <span>Monday - Friday:</span>7:00 a.m. – 5:00 p.m. <br>
+                <span>Saturday:</span>7:00 a.m. – 12:00 p.m.
+            </address>
+        </div>
+    </div>
+    <div *ngIf="SegmentationTypeId ==4" (click)="poSearchClick()" class="header-flaticon-speech-bubble"
+        style=" right: 180px;   padding: 4px;">
+        <img style="width: 20px;"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACAklEQVRIia2UsUuVYRjFz3ORhmgQuQnJHRykoT/AGkQkQpoKGoIgmsWhIaLdob+hKRpCDKKpoQgkQiLEGiJEzHQoKhIiHMTses+voefCR93r95n3mZ7hec95z3nP+4QKBdQknZF0RdIYUJf0S9L7iHgi6UFEbOp/CugH7gE7dK9Pti/lRQ4M/tx2G2gFmLF9DZi2PQtsA9jeAaYOAl4DZm23D98CjnSYGwFe5tw2MF6VYKJgy8395AP1VAewUMmq9B3bb4G+CvMXgGbaeapsvgaMZT8XEXulN5KeSfqY/UQpQUTUJSkiPlQAV0T8lLQZEQJOlBJIat/6n4ftVm3vI8KlBMBG9qcrgg9GxDAgSWtVDtzOVHyzXa8wfwNoAbu2h6oQjAA/kuQRcHSf2VHbW5m6+6XghYPTtlv5iV4Ao8WMAwPAddtbGc9d4OxBCPpsz9huppJt4B3wGJgHvqYtbXCAddtXgXO2u6ouksj2ZWC1y6JrAnPAeeBz2gTQsj0P9HfCjU5q9GdVj0fEcUl7wFpEPI2IjZyZAu5IUv4HSXodERcj4ktl6/ZRO9lJou1XthuHJrB9DFgsrHcK/RIw0AsVQ+RmzfRR6JeA8j9SQclJYLlLKBaAwV4oGQFWuth199AESdKwvdzBru89IUiSYdtv/krVas8IkqQBPMyVsg5M/gZ2Ts98TFMNugAAAABJRU5ErkJggg==">
+        <span>PO Search</span>
+    </div>
+    <div *ngIf="isShowPoSearch" class="po-search-box">
+        <mat-form-field class="test" style="width: 100%;">
+            <input matInput type="text" placeholder="Customer Name" [(ngModel)]="customerNameVal">
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Phone#" [(ngModel)]="phoneNoVal">
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="PO#" [(ngModel)]="poNoVal">
+        </mat-form-field>
+        <button class="search-btn" (click)="searchClick()">Search</button>
+    </div>
+    <div *ngIf="SegmentationTypeId ==4" (click)="listingClick()" class="header-flaticon-speech-bubble" #anchor1
+        style="right: 280px;">
+        <i class="flaticon-list"></i>
+        <span style="position: relative;bottom: 2px;">Listing</span>
+    </div>
+    <div *ngIf="isShowAlert" class="div-alert" [class.danger-class]="alert.type=='danger'"
+        [class.success-class]="alert.type=='success'">{{ alert.msg }}</div>
+    <kendo-popup [anchor]="anchor" *ngIf="showContext">
+        <div class='content'>
+            <kendo-panelbar [expandMode]="expandMode" id="contextMenu" style="width: 170px;">
+                <kendo-panelbar-item [title]="' '" (click)="changePassword()">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-padlock"></i>
+                        <span>Change Password</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item [title]="' '" (click)="logoutEvent()">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-logout"></i>
+                        <span>Logout</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+            </kendo-panelbar>
+        </div>
+    </kendo-popup>
+    <i *ngIf="SegmentationTypeId !=4" class="flaticon-speech-bubble flaticon-speech-bubble-1" title="Call History"
+    (click)="onCallHistory()"></i>
+    <div *ngIf="missCallCount!='0'" class="budget-count-misscall">{{missCallCount}}</div>
+    <app-wiki-help *ngIf="moduleNameForWiki != ''" [data]='moduleNameForWiki'></app-wiki-help>
+    <button *ngIf="isAvailablityPunch" class="punchin-btn" (click)="onPunchBtn(punchTitle)">{{punchTitle}}</button>
+    <kendo-popup *ngIf="showListingContext"
+        class="panelbar-po-search">
+        <div class='content'>
+            <kendo-panelbar [expandMode]="expandMode" id="contextMenu">
+                <kendo-panelbar-item [title]="' '" (click)="browseOrderListClick()">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-newspaper"></i>
+                        <span title="See the list of all ongoing open Pos">All Open Pos</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item [title]="' '" (click)="homeClick()">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-file"></i>
+                        <span title="Check the Pos requiring store special considerations">Pos having Concerns</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+            </kendo-panelbar>
+        </div>
+    </kendo-popup>
+</div>
+<div *ngIf="SegmentationTypeId !=4" class="row" style="margin:0px;width: 100%;">
+    <div class="panelbar-wrapper" (mouseenter)="onMouseOver(true)" (mouseleave)="onMouseOver(false)">
+        <kendo-panelbar [expandMode]="expandMode" id="panelbar" [class.showPanelbar]="sidebarFlag"
+            [class.hidePanelbar]="!sidebarFlag">
+            <kendo-panelbar-item *ngIf="SegmentationTypeId !=4" [title]="' '" 
+                (click)="menuItemClick('Home')">
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-home " title="Running Order Summary"></i>
+                    <span class="hide">Running Order Summary</span>
+                </ng-template>
+            </kendo-panelbar-item>
+            <kendo-panelbar-item *ngIf="ShowAdmin " [title]="' '">
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-admin-with-cogwheels sidebar-flaticon-admin-with-cogwheels" title="Admin"></i>
+                    <span class="hide"> Admin</span>
+                </ng-template>
+
+                <kendo-panelbar-item *ngIf="ShowNotification " [title]="' '"
+                    (click)="menuItemClick('mainMenu-Notification')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-bell" title="Notification Management"></i>
+                        <span class="hide">Notification Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowDownload " [title]="' '"
+                    (click)="menuItemClick('mainMenu-Download')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-download" title="Download Management"></i>
+                        <span class="hide"> Download Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowPoDownloadException" [title]="' '"
+                    (click)="menuItemClick('PoDownloadException')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-download" title="Po download exception"></i>
+                        <span class="hide"> Po download exception</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowSttDiscrepancy " [title]="' '"
+                    (click)="menuItemClick('StatusDiscrepancy')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-status" title="Status Discrepancy"></i>
+                        <span class="hide"> Status Discrepancy</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowTracer " [title]="' '"  
+                    (click)="menuItemClick('mainMenu-Tracer')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-sketch" title="Tracer"></i>
+                        <span class="hide"> Tracer</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowSuspend " [title]="' '"  
+                    (click)="menuItemClick('SuspendTasks')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-power-button" title="Stocked Processes"></i>
+                        <span class="hide"> Stocked Processes</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowServiceCall" [title]="' '"  
+                    (click)="menuItemClick('ServiceCall')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-settings" title="Service Call"></i>
+                        <span class="hide">Service Call</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+            </kendo-panelbar-item>
+            <kendo-panelbar-item *ngIf="ShowAccount " [title]="' '"  >
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-account" title="Account Management"></i>
+                    <span class="hide"> Account Management</span>
+                </ng-template>
+                <kendo-panelbar-item *ngIf="ShowUser " [title]="''"  
+                    (click)="menuItemClick('mainMenu-UserManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-boss" title="User Management"></i>
+                        <span class="hide"> User Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowLocation " [title]="''"  
+                    (click)="menuItemClick('Location')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="MobileFlaticon-facebook-placeholder-for-locate-places-on-maps" title="Location"></i>
+                        <span class="hide"> Location</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowRole " [title]="''"  
+                    (click)="menuItemClick('mainMenu-RoleManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-role" title="Role Management"></i>
+                        <span class="hide"> Role Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowModule " [title]="' '"  
+                    (click)="menuItemClick('mainMenu-ModuleMng')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-jigsaw" title="Module Management"></i>
+                        <span class="hide">Module Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+            </kendo-panelbar-item>
+            <kendo-panelbar-item *ngIf="ShowDesigner " [title]="' '"  >
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-writing-tool" title="Designer"></i>
+                    <span class="hide"> Designer</span>
+                </ng-template>
+
+                <kendo-panelbar-item *ngIf="ShowWorkflowDesigner " [title]="' '"  
+                    (click)="menuItemClick('WorkflowDesigner')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-workflow" title="Workflow Designer"></i>
+                        <span class="hide"> Workflow Designer</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+
+                <kendo-panelbar-item *ngIf="ShowFrmBuilder" [title]="' '"  
+                    (click)="menuItemClick('FormBuilder')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-sketch" title="Form Builder"></i>
+                        <span class="hide"> Form Builder</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowContentManagement" [title]="' '"  
+                    (click)="menuItemClick('ContentManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-list-1" title="Content Management"></i>
+                        <span class="hide">Content Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowNewTask" [title]="' '"  
+                (click)="menuItemClick('mainMenu-NewTaskMng')">
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-newspaper" title="Task Manager"></i>
+                    <span class="hide"> Task Manager</span>
+                </ng-template>
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowProcessManagement" [title]="' '"  
+                (click)="menuItemClick('ProcessManagement')">
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-process" title="Process Management"></i>
+                    <span class="hide"> Process Management</span>
+                </ng-template>
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowSchedule " [title]="' '"   (click)="scheduleClick()">
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-calendar" title="Schedule"></i>
+                    <span class="hide"> Schedule</span>
+                </ng-template>
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowReportsPortal" [title]="' '"  
+                (click)="menuItemClick('ReportsPortal')">
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-list" title="Reports Portal"></i>
+                    <span class="hide">Reports Portal</span>
+                </ng-template>
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowHumanResourceManagement" [title]="' '"  >
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-employee" title="Human Resource Management"></i>
+                    <span class="hide"> Human Resource Management</span>
+                </ng-template>
+
+                <kendo-panelbar-item *ngIf="ShowOpening " [title]="' '"  
+                    (click)="menuItemClick('Opening')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-menu" title="Opening"></i>
+                        <span class="hide">Opening</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowPersonnelInfo" [title]="' '"  
+                    (click)="menuItemClick('PersonnelInfo')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-new-user" title="Personnel Info"></i>
+                        <span class="hide">Personnel Info</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowTeamManagement" [title]="' '"  
+                    (click)="menuItemClick('TeamManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-team" title="Team Management"></i>
+                        <span class="hide">Team Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowSubledgerManagement" [title]="' '"  
+                    (click)="menuItemClick('SubledgerManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-cube-molecule" title="Subledger Management"></i>
+                        <span class="hide">Subledger Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowTabletManagement" [title]="' '"  
+                    (click)="menuItemClick('TabletManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-order" title="Device Management"></i>
+                        <span class="hide">Device Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowComplianceDefinition" [title]="' '"  
+                    (click)="menuItemClick('ComplianceDefinition')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-paper-work" title="Compliance Definition"></i>
+                        <span class="hide">Compliance Definition</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowSubManagement" [title]="' '"  
+                    (click)="menuItemClick('SubManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-team-1" title="Sub Management"></i>
+                        <span class="hide">Sub Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowTimeAndAttendance" [title]="' '"  
+                    (click)="menuItemClick('TimeAndAttendance')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-navigation-history-interface-symbol-of-a-clock-with-an-arrow"
+                            title="Time & Attendance"></i>
+                        <span class="hide"> Time & Attendance</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowCompanySetup" [title]="' '"  >
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-settings-1" title="Company Setup"></i>
+                    <span class="hide"> Company Setup</span>
+                </ng-template>
+
+                <kendo-panelbar-item *ngIf="ShowBasicPrice" [title]="' '"  
+                    (click)="menuItemClick('BasicPrice')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-price-tag" title="Base Price"></i>
+                        <span class="hide">Base Price</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowOperations" [title]="' '"  
+                    (click)="menuItemClick('Operations')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-cogwheel" title="Operations"></i>
+                        <span class="hide">Operations</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowServicelineAndMethod" [title]="' '"  
+                    (click)="menuItemClick('ServicelineAndMethod')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-filter" title="Serviceline & Method"></i>
+                        <span class="hide">Serviceline & Method</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowTagsDefinition" [title]="' '"  
+                    (click)="menuItemClick('TagsDefinition')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-jigsaw" title="Tags"></i>
+                        <span class="hide">Tags</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowOfficeManagement" [title]="' '"  
+                    (click)="menuItemClick('OfficeManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-building" title="Office Management"></i>
+                        <span class="hide">Office Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowChargebackKinds" [title]="' '"  
+                    (click)="menuItemClick('ChargebackKinds')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-payment" title="Chargeback Kinds"></i>
+                        <span class="hide">Chargeback Kinds</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowFunctions" [title]="' '"  
+                    (click)="menuItemClick('Functions')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-cogwheel" title="Functions"></i>
+                        <span class="hide">Functions</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowCalendars" [title]="' '"  
+                    (click)="menuItemClick('Calendars')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-calendar" title="Calendars"></i>
+                        <span class="hide">Calendars</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowRegions" [title]="' '"   (click)="menuItemClick('Regions')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="MobileFlaticon-facebook-placeholder-for-locate-places-on-maps" title="Regions"></i>
+                        <span class="hide">Regions</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowComplainSubjects" [title]="' '"  
+                    (click)="menuItemClick('ComplainSubjects')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-teamwork" title="Complain Subjects"></i>
+                        <span class="hide">Complain Subjects</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowChecklistDefinition" [title]="' '"  >
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-verified-text-paper" title="Checklist"></i>
+                        <span class="hide"> Checklist</span>
+                    </ng-template>
+
+                    <kendo-panelbar-item *ngIf="ShowChecklistManagement" [title]="' '"  
+                        (click)="menuItemClick('ChecklistManagement')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-verified-text-paper" title="Checklist Management"></i>
+                            <span class="hide">Checklist Management</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+
+                    <kendo-panelbar-item *ngIf="ShowChecklistAnswers" [title]="' '"  
+                        (click)="menuItemClick('ChecklistAnswers')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-checklist" title="Checklist Answers"></i>
+                            <span class="hide">Checklist Answers</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+                </kendo-panelbar-item>
+
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowSaleAndScheduling" [title]="' '"  >
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-warehouse" title="Sale & Scheduling"></i>
+                    <span class="hide">Sale & Scheduling</span>
+                </ng-template>
+
+                <kendo-panelbar-item *ngIf="ShowOrder " [title]="' '"  
+                    (click)="menuItemClick('mainMenu-OrderMng')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-order" title="Order Management"></i>
+                        <span class="hide"> Order Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowOrdersList" [title]="' '"  
+                    (click)="menuItemClick('OrdersList')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-list" title="Orders List"></i>
+                        <span class="hide">Orders List</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowScheduleMng " [title]="' '"  
+                    (click)="menuItemClick('mainMenu-Schedule Management')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-calendar" title="Schedule Management"></i>
+                        <span class="hide"> Schedule Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowSubAssignment" [title]="' '"  
+                    (click)="menuItemClick('SubAssignment')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-team-1" title="Sub Assignment"></i>
+                        <span class="hide"> Sub Assignment</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowMonitoring" [title]="' '"  
+                    (click)="menuItemClick('Monitoring')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-status" title="Monitoring"></i>
+                        <span class="hide"> Monitoring</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowMarketsAndStores" [title]="' '"  
+                    (click)="menuItemClick('MarketsAndStores')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-menu" title="Markets & Stores"></i>
+                        <span class="hide">Markets & Stores</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowVOC" [title]="' '"  
+                    (click)="menuItemClick('VoiceOfCustomer')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-speaking" title="VOC"></i>
+                        <span class="hide">VOC</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowRecieveAndPayment" [title]="' '"  >
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-payment" title="Recieve & Payment"></i>
+                    <span class="hide">Recieve & Payment</span>
+                </ng-template>
+
+                <kendo-panelbar-item *ngIf="ShowARStatementManagement" [title]="' '"  
+                    (click)="menuItemClick('ARStatementManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-document" title="AR Statement"></i>
+                        <span class="hide"> AR Statement</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowAPStatementManagement" [title]="' '"  
+                    (click)="menuItemClick('APStatementManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-document" title="AP Statement"></i>
+                        <span class="hide"> AP Statement</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowNoteManagement" [title]="' '"  
+                    (click)="menuItemClick('NoteManagement')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-newspaper" title="Note Management"></i>
+                        <span class="hide"> Note Management</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowReconcile" [title]="' '"  
+                    (click)="menuItemClick('Reconcile')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-teamwork-1" title="Reconcile"></i>
+                        <span class="hide"> Reconcile</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowPayroll" [title]="' '"   (click)="menuItemClick('Payroll')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-payment" title="Payroll"></i>
+                        <span class="hide"> Payroll</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowInvoiceExpences" [title]="' '"  
+                    (click)="menuItemClick('InvoiceExpences')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-paper-work" title="Invoice Expences"></i>
+                        <span class="hide"> Invoice Expences</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowExpenseDefinition" [title]="' '"  
+                    (click)="menuItemClick('ExpenseDefinition')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-role" title="Expense Definition"></i>
+                        <span class="hide"> Expense Definition</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowUnfinishedJobs" [title]="' '"  
+                    (click)="menuItemClick('UnfinishedJobs')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-error" title="Unfinished Jobs"></i>
+                        <span class="hide"> Unfinished Jobs</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowAROpenItems" [title]="' '"  
+                    (click)="menuItemClick('AROpenItems')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-letter" title="AR Open Items"></i>
+                        <span class="hide"> AR Open Items</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowAPOpenItems" [title]="' '"  
+                    (click)="menuItemClick('APOpenItems')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-letter" title="AP Open Items"></i>
+                        <span class="hide"> AP Open Items</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowInventory" [title]="' '"  >
+                <ng-template kendoPanelBarItemTitle>
+                    <i class="flaticon-storage" title="Inventory"></i>
+                    <span class="hide">Inventory</span>
+                </ng-template>
+
+                <kendo-panelbar-item *ngIf="ShowInventoryItems" [title]="' '"  
+                    (click)="menuItemClick('InventoryItems')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-list" title="Items"></i>
+                        <span class="hide"> Items</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+                <kendo-panelbar-item *ngIf="ShowFlows" [title]="' '"  >
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-flash" title="Flows"></i>
+                        <span class="hide">Flows</span>
+                    </ng-template>
+
+                    <kendo-panelbar-item *ngIf="ShowEnterance" [title]="' '"  
+                        (click)="menuItemClick('Enterance')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-enter" title="Entrance"></i>
+                            <span class="hide"> Entrance</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+
+                    <kendo-panelbar-item *ngIf="ShowExit" [title]="' '"   (click)="menuItemClick('Exit')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-sign-out-option" title="Exit"></i>
+                            <span class="hide"> Exit</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+
+                    <kendo-panelbar-item *ngIf="ShowBillOfLading" [title]="' '"  
+                        (click)="menuItemClick('BillOfLading')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-checklist" title="Bill Of Lading"></i>
+                            <span class="hide"> Bill Of Lading</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+
+                    <kendo-panelbar-item *ngIf="ShowMaterialConfirmation" [title]="' '"  
+                        (click)="menuItemClick('MaterialConfirmation')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-verified-text-paper" title="Material Confirmation"></i>
+                            <span class="hide"> Material Confirmation</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowAdjustment" [title]="' '"  >
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-filter" title="Adjustment"></i>
+                        <span class="hide">Adjustment</span>
+                    </ng-template>
+
+                    <kendo-panelbar-item *ngIf="ShowCounting" [title]="' '"  
+                        (click)="menuItemClick('Counting')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-checklist" title="Counting"></i>
+                            <span class="hide"> Counting</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+
+                    <kendo-panelbar-item *ngIf="ShowCorrection" [title]="' '"  
+                        (click)="menuItemClick('Correction')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-verified-text-paper" title="Correction"></i>
+                            <span class="hide"> Correction</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowStandardCosting" [title]="' '"  >
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-price-tag" title="Standard Costing"></i>
+                        <span class="hide">Standard Costing</span>
+                    </ng-template>
+
+                    <kendo-panelbar-item *ngIf="ShowMaterialCosts" [title]="' '"  
+                        (click)="menuItemClick('MaterialCosts')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-document" title="Material Costs"></i>
+                            <span class="hide"> Material Costs</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+
+                    <kendo-panelbar-item *ngIf="ShowCostsChangeDocuments" [title]="' '"  
+                        (click)="menuItemClick('CostsChangeDocuments')">
+                        <ng-template kendoPanelBarItemTitle>
+                            <i class="flaticon-newspaper" title="Costs Change Documents"></i>
+                            <span class="hide"> Costs Change Documents</span>
+                        </ng-template>
+                    </kendo-panelbar-item>
+                </kendo-panelbar-item>
+            </kendo-panelbar-item>
+
+            <kendo-panelbar-item *ngIf="ShowPurchase" [title]="' '"  >
+                <ng-template kendoPanelBarItemTitle>
+                    <img title="Purchase" class="img-style"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHqSURBVEiJrdbNi41RHAfwj+tlBoOZDCk0ZaHsJhYzihopkaWV/AVkw8aCQqMsLDQLayuiSFFEFoMFKyYLKaW8xWJiXPI2w7X4nad7ezz3ba5vnc557u+c7+/l+5zfc+kMPbiMMh5gXYd8/+AEvmEUr3Drf5IP4C7ui8jHMJnW8zsl34tKgzGWbZyX5v0YTOspnMPrRLQkR34Rq5sEsCbvYD02pfUA9mADtibncAFXMZ3miRzpChzAFizNfpxT4H0YDzGSNl7HbezEUEFGGd6KrF+k9VC99ObiE46jFzM4ItJuVPd36fwVPM/ISgUOfot3epvQYyLNy+tFlNCf5rKaEtXDYfzAQizGAqFXX5MBi0TmqIqcxzi6hB4vVYVuB0/FG1eIEj7ipBB1WuP6F40nGVER/ggdRvAFj2eRwZ1GDogyDYuajs/Cwc1mGwZFqtuxS3vl+ayFflQSzWtU+zpcajFL14QW8KhF8hlsbtXBQfzE2lYP5FHUi2rRj2eipvfELW+GNziVPdS7aBkmRUc9io1p/686gXYlW2+BvSkOiegrOJOzrRIdtCKib/u7XMJXnMfpRLSyxn5MXMbd+ICztYeblYi41eUUWZ9ogt9r7FPoFv2/Jz23jR2i6b3HvpytW/Wvyw0sqzX+BWsjmjZkPhrfAAAAAElFTkSuQmCC">
+                    <span class="hide">Purchase</span>
+                </ng-template>
+
+                <kendo-panelbar-item *ngIf="ShowCreatePO" [title]="' '"  
+                    (click)="menuItemClick('CreatePO')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <img title="Create PO" class="img-style"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAF+SURBVEiJ1dW9axRhEMfxz+kF1ENBFHu7oFWIREhh1CqNhWVSplEbC5uzUExAIaRLY6r8BQcmWISERBtTpIkIvuFLK0gQG00leCluDpbH3XXjpnFg2OeZmf1995ln91kYwyd0/9Hf4aISqyPe95dF4o0oqGs/cTwvcegAxEutmcyf4n3Fe8/h2t+K0hZdxauKgCE8i3Fhi/7LPbiNLVznzz1oK3nlwqYwkcTm43ojM+5gMl1BlRU1kvkj3MMZPMGbiB/GY+p9YHMh1sZ3DAfodeRX6wCy4v1YFrKIEyngMk7m+CmsZOoehviDHPAOBvv9Szf5jt7hlVoTF2Lc73kb0zm1H/AlG9hPWzpxz/2C/HO0UmJV8d84j/GC/AaO5ayoMmAp6l/k5NZwNE98P4DR8DS+giNF4lUBm1G7nIl9xV0M4EpdwGw85S98xs2YtwLyrS5gS+8YOat3BJzGTAh38aMuoIt13MICdpNcKeAgfvrbZYBL+FhD/C1GisT3AFoaCoHZ/Jz2AAAAAElFTkSuQmCC">
+                        <span class="hide"> Create PO</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowEstimateRequest" [title]="' '"  
+                    (click)="menuItemClick('EstimateRequest')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-tools-and-utensils" title="Estimate Request"></i>
+                        <span class="hide"> Estimate Request</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowPurchasableItems" [title]="' '"  
+                    (click)="menuItemClick('PurchasableItems')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-document" title="Purchasable Items"></i>
+                        <span class="hide"> Purchasable Items</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+                <kendo-panelbar-item *ngIf="ShowVendor" [title]="' '"   (click)="menuItemClick('Vendor')">
+                    <ng-template kendoPanelBarItemTitle>
+                        <i class="flaticon-visitor-identification" title="Vendor"></i>
+                        <span class="hide"> Vendor</span>
+                    </ng-template>
+                </kendo-panelbar-item>
+
+            </kendo-panelbar-item>
+
+
+
+        </kendo-panelbar>
+    </div>
+
+    <div class="main" id="main-content" [class.main-hide]="!sidebarFlag" [class.main-show]="sidebarFlag">
+
+        <div *ngIf="isLoad" class="loading">Loading&#8230;</div>
+        <!-- <app-message-management *ngIf="itemClicked=='mainMenu-Notification'"></app-message-management>
+        <app-user-management *ngIf="itemClicked=='mainMenu-UserManagement'"></app-user-management>
+        <app-download-management *ngIf="itemClicked=='mainMenu-Download'"></app-download-management>
+        <app-home-page *ngIf="itemClicked=='Home'"></app-home-page>
+        <app-tracker-page *ngIf="itemClicked=='mainMenu-Tracer'"></app-tracker-page>
+        <app-designer-page *ngIf="itemClicked=='WorkflowDesigner'"></app-designer-page>
+        <app-form-builder *ngIf="itemClicked=='FormBuilder'"></app-form-builder>
+        <app-role-management *ngIf="itemClicked=='mainMenu-RoleManagement'"></app-role-management>
+        <app-module-management *ngIf="itemClicked=='mainMenu-ModuleMng'"></app-module-management>
+        <app-modal-schedule-window [typeWindow]="'window'" *ngIf="itemClicked=='mainMenu-Schedule'">
+        </app-modal-schedule-window>
+        <app-order-management *ngIf="itemClicked=='mainMenu-OrderMng'" [typePage]="'main'"></app-order-management>
+        <app-suspend-tasks *ngIf="itemClicked=='SuspendTasks'"></app-suspend-tasks>
+        <app-new-schedule *ngIf="itemClicked=='newSchedule'"></app-new-schedule>
+        <app-status-discrepancy *ngIf="itemClicked=='StatusDiscrepancy'"></app-status-discrepancy>
+        <app-schedule-management *ngIf="itemClicked=='mainMenu-Schedule Management'" class="schedule-mng-custom">
+        </app-schedule-management>
+        <app-reports-portal *ngIf="itemClicked=='ReportsPortal'"></app-reports-portal>
+        <app-monitoring *ngIf="itemClicked=='Monitoring'"></app-monitoring>
+        <app-service-call *ngIf="itemClicked=='ServiceCall'"></app-service-call>
+        <app-team-management *ngIf="itemClicked=='TeamManagement'"></app-team-management>
+        <app-content-management *ngIf="itemClicked=='ContentManagement'"></app-content-management>
+        <app-opening-applicants *ngIf="itemClicked=='Opening'"></app-opening-applicants>
+        <app-personnel-info *ngIf="itemClicked=='PersonnelInfo'"></app-personnel-info>
+        <app-basic-price *ngIf="itemClicked=='BasicPrice'"></app-basic-price>
+        <serviceline-with-kind *ngIf="itemClicked=='Operations'"></serviceline-with-kind>
+        <app-serviceline-and-method *ngIf="itemClicked=='ServicelineAndMethod'"></app-serviceline-and-method>
+        <app-location *ngIf="itemClicked=='Location'"></app-location>
+        <app-compliance-definition *ngIf="itemClicked=='ComplianceDefinition'"></app-compliance-definition>
+        <app-sub-management *ngIf="itemClicked=='SubManagement'"></app-sub-management>
+        <app-markets *ngIf="itemClicked=='MarketsAndStores'"></app-markets>
+        <app-process-management *ngIf="itemClicked=='ProcessManagement'"></app-process-management>
+        <app-statement-management [type]="itemClicked" *ngIf="itemClicked=='ARStatementManagement' || itemClicked=='APStatementManagement'"></app-statement-management>
+        <app-voc *ngIf="itemClicked=='VoiceOfCustomer'"></app-voc>
+        <app-reconcile *ngIf="itemClicked=='Reconcile'"></app-reconcile>
+        <app-payroll *ngIf="itemClicked=='Payroll'"></app-payroll>
+        <app-statement-note *ngIf="itemClicked=='NoteManagement'"></app-statement-note>
+        <app-enterance *ngIf="itemClicked=='Enterance'"></app-enterance>
+        <app-exit *ngIf="itemClicked=='Exit'"></app-exit>
+        <app-bill-of-lading *ngIf="itemClicked=='BillOfLading'"></app-bill-of-lading>
+        <app-material-confirmation *ngIf="itemClicked=='MaterialConfirmation'"></app-material-confirmation>
+        <app-counting *ngIf="itemClicked=='Counting'"></app-counting>
+        <app-correction *ngIf="itemClicked=='Correction'"></app-correction>
+        <app-create-po *ngIf="itemClicked=='CreatePO'"></app-create-po>
+        <app-tablet-management *ngIf="itemClicked=='TabletManagement'"></app-tablet-management>
+        <app-estimate-request *ngIf="itemClicked=='EstimateRequest'"></app-estimate-request>
+        <app-purchasable-items *ngIf="itemClicked=='PurchasableItems'"></app-purchasable-items>
+        <app-expense *ngIf="itemClicked=='InvoiceExpences'" [data]="InvoiceExpencesData"></app-expense>
+        <app-vendor *ngIf="itemClicked=='Vendor'"></app-vendor>
+        <app-subledger-management *ngIf="itemClicked=='SubledgerManagement'"></app-subledger-management>
+        <app-new-task-manager *ngIf="itemClicked=='mainMenu-NewTaskMng'"></app-new-task-manager>
+        <app-expense-definition *ngIf="itemClicked=='ExpenseDefinition'"></app-expense-definition>
+        <app-material-costs *ngIf="itemClicked=='MaterialCosts'"></app-material-costs>
+        <app-costs-change-documents *ngIf="itemClicked=='CostsChangeDocuments'"></app-costs-change-documents>
+        <app-tags-definition *ngIf="itemClicked=='TagsDefinition'"></app-tags-definition>
+        <app-sub-assignment *ngIf="itemClicked=='SubAssignment'"></app-sub-assignment>
+        <app-office-management *ngIf="itemClicked=='OfficeManagement'"></app-office-management>
+        <app-unfinished-jobs *ngIf="itemClicked=='UnfinishedJobs'"></app-unfinished-jobs>
+        <app-checklist-answers-definition *ngIf="itemClicked=='ChecklistAnswers'"></app-checklist-answers-definition>
+        <app-checklist-management *ngIf="itemClicked=='ChecklistManagement'"></app-checklist-management>
+        <app-calendar *ngIf="itemClicked=='Calendars'"></app-calendar>
+        <app-time-and-attendance *ngIf="itemClicked=='TimeAndAttendance'"></app-time-and-attendance>
+        <app-orders-list *ngIf="itemClicked=='OrdersList'"></app-orders-list>
+        <app-ar-open-items *ngIf="itemClicked=='AROpenItems'"></app-ar-open-items>
+        <app-ap-open-items *ngIf="itemClicked=='APOpenItems'"></app-ap-open-items>
+        <app-inventory-items *ngIf="itemClicked=='InventoryItems'"></app-inventory-items>
+        <app-chargeback-kinds *ngIf="itemClicked=='ChargebackKinds'"></app-chargeback-kinds>
+        <app-functions-definition *ngIf="itemClicked=='Functions'"></app-functions-definition>
+        <app-regions *ngIf="itemClicked=='Regions'"></app-regions>
+        <app-complain-subjects *ngIf="itemClicked=='ComplainSubjects'"></app-complain-subjects>
+        <app-po-download-exception *ngIf="itemClicked=='PoDownloadException'"></app-po-download-exception> -->
+    </div>
+</div>
+<div *ngIf="SegmentationTypeId ==4" class="row div-body-store">
+    <!-- <app-home-for-store *ngIf="itemClicked=='homeForStoreFlag'" style="width: 99%;"></app-home-for-store> -->
+</div>
+
+<kendo-window [resizable]="false" *ngIf="isOpenWindowOrderMng" class="window-style">
+    <kendo-window-titlebar>
+        <div class='k-window-title window-header'>Order# {{orderNoClicked}}</div>
+        <button kendoButton (click)="closeWindowOrderMng()" [icon]="'close'" [type]="'bare'"></button>
+    </kendo-window-titlebar>
+    <!-- <app-order-management [inputNotifyData]="inputNotifyData"></app-order-management> -->
+</kendo-window>
+
+<kendo-window [resizable]="false" *ngIf="isOpenWindowHome" class="window-style">
+    <kendo-window-titlebar style="background-color: gray;
+    color: white;
+    font-weight: bold;
+    height: 33px;">
+        <div class='k-window-title window-header'>Pos having Concerns</div>
+        <button kendoButton (click)="closeWindowHome()" [icon]="'close'" [type]="'bare'"></button>
+    </kendo-window-titlebar>
+    <!-- <app-home-for-store1></app-home-for-store1> -->
+</kendo-window>
+
+<kendo-window [resizable]="false" *ngIf="isOpenWindowBrowseOrdLst" class="window-style">
+    <kendo-window-titlebar style="background-color: gray;
+    color: white;
+    font-weight: bold;
+    height: 33px;">
+        <div class='k-window-title window-header'>All Open Pos {{windowTitle}}</div>
+        <button kendoButton (click)="closeWindowBrowseOrdLst()" [icon]="'close'" [type]="'bare'"></button>
+    </kendo-window-titlebar>
+    <!-- <app-browse-orders-list [data]="selectedData"></app-browse-orders-list> -->
+</kendo-window>
+
+<kendo-window [resizable]="false" *ngIf="isOpenHelp" class="window-style">
+    <kendo-window-titlebar style="background-color: gray;
+    color: white;
+    font-weight: bold;
+    height: 33px;">
+        <div class='k-window-title window-header'>Help</div>
+        <button kendoButton (click)="closeHelp()" [icon]="'close'" [type]="'bare'"></button>
+    </kendo-window-titlebar>
+    HELP PAGE
+</kendo-window>
+
+<kendo-window *ngIf="isOpenCallhistory" class="window-style-call-history" title="Call history of extension# {{extentionNo}}"
+    (close)="onCloseCallHistory()">
+    <!-- <modal-call-history [(onClose)]="isOpenCallhistory"></modal-call-history> -->
+</kendo-window>
+
+<kendo-window [resizable]="false" *ngIf="isOpenWindowOrderMngNav" class="window-style-order-nav">
+    <kendo-window-titlebar>
+        <div class='k-window-title window-header'>Order Management</div>
+        <button kendoButton (click)="isOpenWindowOrderMngNav=false" [icon]="'close'" [type]="'bare'"></button>
+    </kendo-window-titlebar>
+    <!-- <app-order-management [inputNotifyData]="inputNotifyOrderData"></app-order-management> -->
+</kendo-window>
+
+<kendo-window *ngIf="isOpenInstJobs" class="window-style-order-nav" title="Installer Ongoing Jobs"
+    (close)="isOpenInstJobs=false">
+    <!-- <app-installer-ongoing-jobs [memNo]="inputNotifyOrderData.key"></app-installer-ongoing-jobs> -->
+</kendo-window>

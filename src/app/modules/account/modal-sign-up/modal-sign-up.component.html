@@ -1,0 +1,93 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left ">Sign Up</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <!-- <cp-alert *ngIf="alertFlag" [alertStatus]="alert"></cp-alert> -->
+  <div class="container">
+    <form (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+          <span style="color:red">*</span>
+          <mat-form-field class="example-form-field">
+            <input matInput type="text" placeholder="First Name" formControlName="FirstName">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+            <span style="color:red">*</span>
+          <mat-form-field class="example-form-field">
+            <input matInput type="text" placeholder="Last Name" formControlName="LastName">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+          <mat-form-field class="example-full-width" style="width: 100%;">
+            <input matInput placeholder="Email" formControlName="Email" [errorStateMatcher]="matcher">
+            <mat-hint>Errors appear instantly!</mat-hint>
+            <mat-error *ngIf="Email.hasError('email') && !Email.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="Email.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+            <span style="color:red">*</span>
+          <mat-form-field class="example-form-field">
+            <input matInput type="text" placeholder="User Name" formControlName="UserName">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+            <span style="color:red">*</span>
+          <mat-form-field class="example-form-field">
+            <input matInput type="password" placeholder="Password" formControlName="Password">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+            <span style="color:red">*</span>
+          <mat-form-field class="example-form-field">
+            <input matInput type="password" placeholder="Confirm Password" formControlName="ConfirmPassword" (focusout)="clickOutEvent()">
+          </mat-form-field>
+              <div *ngIf="isErrorPass" class="pass-error" >
+                  <mat-error >
+                      In Valid Confirm Password
+                    </mat-error>
+              </div>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+              <mat-form-field class="example-form-field" >
+                <input matInput type="number" placeholder="Mobile Number" formControlName="MobileNumber">
+              </mat-form-field>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+                <mat-form-field class="example-form-field" >
+                  <input matInput type="number" placeholder="Phone Number" formControlName="PhoneNumber">
+                </mat-form-field>
+              </div>
+        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+          <mat-form-field class="example-form-field" style="width: 100%;">
+            <input matInput type="text" placeholder="Address" formControlName="Address">
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+          <mat-form-field class="example-form-field">
+            <input matInput type="text" placeholder="Personal ID" formControlName="PersonalId">
+          </mat-form-field>
+        </div>
+      </div> -->
+      <div class="row">
+          <button [disabled]="loadSubmitBtn" mat-raised-button color="primary">Sign Up
+              <img *ngIf="loadSubmitBtn" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </button>
+      </div>
+    </form>
+  </div>
+</div>
