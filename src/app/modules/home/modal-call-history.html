@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="row" style="padding-left: 15px;">
-                <input style="margin-right: 20px;" [ngModel]="filterText" *ngIf="gridApi"
+                <input style="margin-right: 20px;" *ngIf="gridApi"
                     (ngModelChange)="gridApi.setQuickFilter($event)" placeholder="Filter ..." />
             </div>
             <ag-grid-angular #logGrid style="width: 100%; height: 50vh;" class="ag-theme-balham"

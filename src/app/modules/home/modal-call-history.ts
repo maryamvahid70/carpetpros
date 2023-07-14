@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild, Input } from "@angular/core";
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Common } from 'src/app/app.component';
-import { TransferServices } from 'src/app/config.service';
+import { TransferServices } from 'src/app/general/services/config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { PlayRecordComponent } from 'src/app/ordr-mngmnt/order-call-history/order-call-history.component';
+// import { PlayRecordComponent } from 'src/app/ordr-mngmnt/order-call-history/order-call-history.component';
 import { Subscription } from "rxjs";
 import { CallHistoryButtonsComponent } from './call-history-btns.component';
+import { catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'modal-call-history',
@@ -31,17 +32,17 @@ import { CallHistoryButtonsComponent } from './call-history-btns.component';
 })
 export class ModalCallHistoryComponent implements OnInit {
 
-    @ViewChild('audioOption', {static: false}) audioPlayerRef: ElementRef;
+    @ViewChild('audioOption', {static: false}) audioPlayerRef!: ElementRef;
     public datePipe = new DatePipe("en-US");
-    public subscriptionPlayRecord: Subscription;
-    public subscription: Subscription;
+    public subscriptionPlayRecord: Subscription| undefined;
+    public subscription: Subscription| undefined;
     public alertFlag: boolean = false;
     public DateVal = new Date();
-    public gridApi;
-    public gridColumnApi;
+    public gridApi: any;
+    public gridColumnApi: any;
     public columnDefs;
     public defaultColDef;
-    public rowData;
+    public rowData: any;
     public VoiceSrc: string = "";
     public downloadmessage: string = "For listen click play button .";
     public isClose: boolean = true;
@@ -50,9 +51,9 @@ export class ModalCallHistoryComponent implements OnInit {
     public loadSearchtBtn = false;
     public CFBtelAgentsData:any;
     public columnDefsCFBtelAgents;
-    public gridApiCFBtelAgents;
-    public telNoVal;
-    public callSearch;
+    public gridApiCFBtelAgents: any;
+    public telNoVal: string= '';
+    public callSearch: any;
     public alertStatus = {
         msg: '',
         type: 'danger',
@@ -60,7 +61,7 @@ export class ModalCallHistoryComponent implements OnInit {
     }
 
     @Input()
-    set onClose(onClose) {
+    set onClose(onClose: boolean) {
         if (!onClose) {
             this.audioPlayerRef.nativeElement.pause();
             this.isClose = false;
@@ -70,7 +71,8 @@ export class ModalCallHistoryComponent implements OnInit {
     constructor(
         private http: HttpClient,
         public bsModalRef: BsModalRef,
-        public transferServices: TransferServices) {
+        public transferServices: TransferServices,
+        private common: Common) {
 
         this.defaultColDef = {
             resizable: true,
@@ -89,7 +91,7 @@ export class ModalCallHistoryComponent implements OnInit {
             { field: "source", headerName: "Phone No", width: 80 , cellStyle: { padding: '0px' }, cellClass: 'link-style' },
             {
                 field: "callername", headerName: "Name", width: 200 , cellStyle: { padding: '0px' },
-                cellClass: function (params) {
+                cellClass: function (params: any) {
                     if (params.data && params.data.callername != "UNKNOWN")
                         return "link-style";
                 }
@@ -99,7 +101,7 @@ export class ModalCallHistoryComponent implements OnInit {
             { field: "duration", headerName: "Duration", width: 70 , cellStyle: { padding: '0px' } },
             { headerName: 'IN/OUT', field: 'CallType' , width: 150, rowGroup: true, hide: true },
             { field: "disposition", headerName: "Disposition", width: 150 , cellStyle: { padding: '0px' }, rowGroup: true, hide: true },
-            { headerName: '', field: '' , cellRenderer: PlayRecordComponent, width: 100 }
+            // { headerName: '', field: '' , cellRenderer: PlayRecordComponent, width: 100 }
         ]
 
         this.columnDefsCFBtelAgents =[
@@ -131,16 +133,16 @@ export class ModalCallHistoryComponent implements OnInit {
             this.subscription.unsubscribe();
     }
 
-    onGridReady(params) {
+    onGridReady(params: any) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
     }
 
-    onGridReadyCFBtelAgents(params) {
+    onGridReadyCFBtelAgents(params: any) {
         this.gridApiCFBtelAgents = params.api;
     }
 
-    cellClicked(e) {
+    cellClicked(e: any) {
         if (e.colDef.field == "callername" && e.data.callername != '' && e.data.callername != "UNKNOWN") {
             let type = '';
             let key = '';
@@ -184,16 +186,27 @@ export class ModalCallHistoryComponent implements OnInit {
             "start_date": date,
             "end_date": date
         };
-        this.callSearch= Common.CallPostApi(this.http, Common.UrlLists.GetCallHistoryByPhoneNo, body)
+        this.callSearch= this.common.CallPostApi(this.http, Common.UrlLists.GetCallHistoryByPhoneNo, body)
+        .pipe(
+            catchError((error) => {
+                if (this.gridApi)
+                this.gridApi.showNoRowsOverlay();
+            this.loadSearchtBtn = false;
+            console.log("Get Call History By PhoneNo ERROR : ", error.error);
+            this.alertStatus.exp = error;
+            this.alertFlag = true;
+              return error;
+            })
+          )
             .subscribe(getData => {
-                getData.forEach(element => {
+                getData.forEach((element: any) => {
                     element.call_date = this.datePipe.transform(element.call_date, Common.formatDateTime);
                 });
                 this.rowData = getData;
                 if (this.gridApi) {
                     var gridApi = this.gridApi;
                     setTimeout(function () {
-                        gridApi.forEachNode(function (node) {
+                        gridApi.forEachNode(function (node: any) {
                             if (node.field == "CallType") {
                                 node.setExpanded(true);
                             }
@@ -203,13 +216,6 @@ export class ModalCallHistoryComponent implements OnInit {
                 if (this.gridApi)
                     this.gridApi.showNoRowsOverlay();
                 this.loadSearchtBtn = false;
-            }, error => {
-                if (this.gridApi)
-                    this.gridApi.showNoRowsOverlay();
-                this.loadSearchtBtn = false;
-                console.log("Get Call History By PhoneNo ERROR : ", error.error);
-                this.alertStatus.exp = error;
-                this.alertFlag = true;
             })
     }
 
@@ -223,22 +229,27 @@ export class ModalCallHistoryComponent implements OnInit {
         this.downloadmessage = "Downloadingsrc/app. Please wait."
         this.audioPlayerRef.nativeElement.pause();
         let splt1 = this.datePipe.transform(new Date(data.call_date), 'yyyy-MM-dd');
-        let splt2 = splt1.split('-');
+        let splt2 = splt1?.split('-');
 
-        Common.CallGetApi(this.http, Common.UrlLists.GetCallRecord + data.unique_id + "&year=" + splt2[0] + "&month=" + splt2[1] + "&day=" + splt2[2])
+        this.common.CallGetApi(this.http, Common.UrlLists.GetCallRecord + 
+            data.unique_id + "&year=" + splt2![0] + "&month=" + splt2![1] + "&day=" + splt2![2])
+            .pipe(
+                catchError((error) => {
+                    this.downloadmessage = error.error;
+                    console.log("ERROR Get Monitoring Grid : ", error.error);
+                  return error;
+                })
+              )
             .subscribe(getdata => {
                 this.downloadmessage = "Downloaded."
                 this.audioPlayerRef.nativeElement.src = "data:audio/wav;base64," + getdata;
                 if (this.isClose)
                     this.audioPlayerRef.nativeElement.play();
 
-            }, error => {
-                this.downloadmessage = error.error;
-                console.log("ERROR Get Monitoring Grid : ", error.error);
             });
     }
 
-    getDial(phoneNo) {
+    getDial(phoneNo: any) {
         this.alertFlag = false;
         let url = Common.UrlLists.CallCenterAPI + "OrgExtNo=" + Common.currentUser.extentionNo + "&CallerName=" + Common.currentUser.userName + "&DestExtNo=" + phoneNo;
         const httpOptions = {
@@ -248,35 +259,42 @@ export class ModalCallHistoryComponent implements OnInit {
             })
         };
         this.http.get<any>(url, httpOptions)
+        .pipe(
+            catchError((error) => {
+                console.log("Call Center API ERROR : ", error.error);
+                this.alertStatus.type = 'danger';
+                this.alertStatus.exp = error;
+                this.alertFlag = true;
+              return error;
+            })
+          )
             .subscribe(
                 getDial => {
                     this.alertStatus.type = 'success';
                     this.alertStatus.msg = getDial;
                     this.alertFlag = true;
-                }, error => {
-                    console.log("Call Center API ERROR : ", error.error);
-                    this.alertStatus.type = 'danger';
-                    this.alertStatus.exp = error;
-                    this.alertFlag = true;
-                }
-            )
+                })
     }
 
     GetCFBtelAgents() {
-        Common.CallGetApi(this.http, Common.UrlLists.GetCFBtelAgents)
+        this.common.CallGetApi(this.http, Common.UrlLists.GetCFBtelAgents)
+        .pipe(
+            catchError((error) => {
+                console.log("ERROR Get CFBtel Agents : ", error.error);
+              return error;
+            })
+          )
             .subscribe(getdata => {
-                getdata.forEach(element => {
+                getdata.forEach((element: any) => {
                     element.type='CFBtelAgent';
                 });
               this.CFBtelAgentsData= getdata;
-            }, error => {
-                console.log("ERROR Get CFBtel Agents : ", error.error);
             });
     }
 
 }
 
-function dateComparator(date1, date2) {
+function dateComparator(date1: string, date2: string) {
 
     var date1Number = _monthToNum(date1);
     var date2Number = _monthToNum(date2);
@@ -295,7 +313,7 @@ function dateComparator(date1, date2) {
   }
   
   // HELPER FOR DATE COMPARISON
-  function _monthToNum(date) {
+  function _monthToNum(date: string): any {
     let datePipe = new DatePipe("en-US");
     let dte;
     if(date!='' && date!= null)
@@ -310,7 +328,7 @@ function dateComparator(date1, date2) {
     var monthNumber = dte.substring(3, 5);
     var dayNumber = dte.substring(0, 2);
   
-    var result = yearNumber * 10000 + monthNumber * 100 + dayNumber;
+    var result = parseInt(yearNumber) * 10000 + parseInt(monthNumber) * 100 + dayNumber;
     // 29/08/2004 => 20040829
     return result;
   }

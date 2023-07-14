@@ -1,0 +1,89 @@
+<div *ngIf="isLoad"
+    class="loading">Loading&#8230;</div>
+
+<div *ngIf="infoSummaryLst&&btnSummaryLst&&homePageBtnLst1&&homePageBtnLst2"
+    class="row">
+    <div class="col-md-8 col-sm-8 col-xs-8">
+        <span class="header-span-style">
+            <img class="img-width"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAATOSURBVEiJpZR7bFNlGMafc3bWc9pzaXt62VbL2Aozw7EhkbnAuEQx7USRiDDRsQ0Uo0KCaIRMrouAioxoMHEJMGK4KMMqEgYbKGqMxo0wDYKA4LoNVthW1q1n7dbrqX/skrUs4PRJvj/e9zvv+/ve58v5CMRJEIQnVRz/OkkQ5Mh8JCL7OtpvlQFojq8ZVJqJZ1cpqATTHZ//hDcYrAYQJQBoWZPRTtGJFhAkZHevuH3HbiGuP27fasOuXdskxqB1RyOyHA4E6/raXasAgGGoORMEdXWFbWZSCs/iyMVrvQcvXK13Sl5bgirZUJG34bXFyflTtZqMVI3vSmuwsLCY5jgeIxdBkDj35/nwxKKnjJnF87UBT29G9xVHPYBWE8uebXi1cFx2kh4GlRI3pF7axHOG39s7/6ZIisxQiAJ58/0D3mWlyzl7sgkf7dzaRSUkREdO0O3uomx5s5STuQmo3FTpSSqyqZu++nYLgNZ0raDSMDSCkQiWH/sOj6WbsSQ7Q7Bfuj6fAgA5GEKaxRJcWlyKpcWlfLOjCe4uNxglA6lXAgColCy0ohY6nR57D+wfgp8EUHOnz2/93tGGV46fxfo507DikSycuNoc7QuHb1Cj3da+fXswbVoulEoVTteditkrWloyMnQB+KvbH/ixpUdaVFuyQJGp16LT14+1Z37u6PD2VcYAQqEQTtfVIuAP4NmFi1B76iRkWQYA6PUGWG0FiEZjnAMA3JK8L5f/UB9R0/RcrZImnZJX6vD2LwPgjAGUrXsb169fw1H7MQBAds4U6HQ6AABFUeA4HqJOHG1ov1PylTjhexDABgClQxsxgG3vfQCXqxMMwwAALl38434WxSs8uIYVA1AqlUhNHY/GxvNwNDWB47hhi4Y0mkX30l2X7OnpQfmmDaj67CCCwWCsRTwPURzVon8HsH95FDUnjmP9xs0wGo2oqz01bJFOb4DVaoPk8YwJEPMeCIKA3NxHMX1GPoABO2RZhizLcHV24PChA//PIqutAFZbwXCcP3MWsnNyYgpEUfffAQ31v6Kl2TEcsxyPrKzJONdQD5bjwLJs9MOt63vamm9y0ifOgEGt+lhJU1tCkag/FI4E7nj6VsYDYiz64mAlIu12qPtroO6vQeXu7SAIAgRJgiRJtLffRmF+mvbrd59PHCckMqvnTdLySoXlzK7ShyZbjCkA8gGYADwB4IG7JgCAhdYMpKbwAID93zjhcDSh+sjnSEpKxqzZswEAapZG/pR0uILAwjlZg1aQijemP7xRw9ByFNHqqsbLbqfknXIXwF53DaJ64Efz9QeQnm5BYeESsByH3sGHj1fRWPF0bkwdQQJvzZiqSVUPHC5Tr+XXnv6lIgbwYslKtLS0wDsYr1rDxVg0FuWZkxPpBHI8FSUQUKh5XL7hSFi3+Z3uexV5utyK1QWZ7FhABM3zzwgTzVWWBY/rABD3+tj12+VosOFCvyiwofi91ttdTJpGHVBQlAwA/nCI9PhDPw01zAKQh1EuPU45zy1e8pLD0RQ0mdOYSxcaA+vKNgoEMdBm755PPUP5F4pK+f1VlYfGMi0AJAoazRqeV7e9WVYeNSaluExm806T2bzDZDbvGJkXRX05AMNYAUOapNPrD6tUqnn3y/8DAVvExTgxr/MAAAAASUVORK5CYII=" />
+            Orders Summary
+        </span>
+        <div class="row"
+            style="margin-left: 0px;">
+            <div *ngFor="let item of homePageBtnLst1; let i = index"
+                class="box-btns"
+                id="{{item.ButtonCaption}}"
+                [class.selected-box]="i==0">
+                <div style="padding: 10px 10px 5px 10px;"
+                    (click)="onClickTaskBtn(item)">
+                    <span style="height: 45px;">{{item.ButtonCaption}}</span><br>
+                    <span style="font-size: 10px;">Lead Time Avg: {{item.LeadTime}}</span><br><br>
+                    <span>{{item.Count}}</span>
+                </div>
+                <div class="box-btns-tasks"
+                    (click)="onlickBtns(item)">
+                    List
+                </div>
+            </div>
+        </div>
+        <div class="row"
+            style="margin-left: 0px;">
+            <div *ngFor="let item of homePageBtnLst2"
+                class="box-btns"
+                id="{{item.ButtonCaption}}">
+                <div style="padding: 10px 10px 5px 10px;"
+                    (click)="onClickTaskBtn(item)">
+                    <span style="height: 45px;">{{item.ButtonCaption}}</span><br>
+                    <span style="font-size: 10px;">Lead Time Avg: {{item.LeadTime}}</span><br><br>
+                    <span>{{item.Count}}</span>
+                </div>
+                <div class="box-btns-tasks"
+                    (click)="onlickBtns(item)">
+                    List
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-4">
+        <span class="header-span-style">
+            <img class="img-width"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAsQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAATOSURBVEiJpZR7bFNlGMafc3bWc9pzaXt62VbL2Aozw7EhkbnAuEQx7USRiDDRsQ0Uo0KCaIRMrouAioxoMHEJMGK4KMMqEgYbKGqMxo0wDYKA4LoNVthW1q1n7dbrqX/skrUs4PRJvj/e9zvv+/ve58v5CMRJEIQnVRz/OkkQ5Mh8JCL7OtpvlQFojq8ZVJqJZ1cpqATTHZ//hDcYrAYQJQBoWZPRTtGJFhAkZHevuH3HbiGuP27fasOuXdskxqB1RyOyHA4E6/raXasAgGGoORMEdXWFbWZSCs/iyMVrvQcvXK13Sl5bgirZUJG34bXFyflTtZqMVI3vSmuwsLCY5jgeIxdBkDj35/nwxKKnjJnF87UBT29G9xVHPYBWE8uebXi1cFx2kh4GlRI3pF7axHOG39s7/6ZIisxQiAJ58/0D3mWlyzl7sgkf7dzaRSUkREdO0O3uomx5s5STuQmo3FTpSSqyqZu++nYLgNZ0raDSMDSCkQiWH/sOj6WbsSQ7Q7Bfuj6fAgA5GEKaxRJcWlyKpcWlfLOjCe4uNxglA6lXAgColCy0ohY6nR57D+wfgp8EUHOnz2/93tGGV46fxfo507DikSycuNoc7QuHb1Cj3da+fXswbVoulEoVTteditkrWloyMnQB+KvbH/ixpUdaVFuyQJGp16LT14+1Z37u6PD2VcYAQqEQTtfVIuAP4NmFi1B76iRkWQYA6PUGWG0FiEZjnAMA3JK8L5f/UB9R0/RcrZImnZJX6vD2LwPgjAGUrXsb169fw1H7MQBAds4U6HQ6AABFUeA4HqJOHG1ov1PylTjhexDABgClQxsxgG3vfQCXqxMMwwAALl38434WxSs8uIYVA1AqlUhNHY/GxvNwNDWB47hhi4Y0mkX30l2X7OnpQfmmDaj67CCCwWCsRTwPURzVon8HsH95FDUnjmP9xs0wGo2oqz01bJFOb4DVaoPk8YwJEPMeCIKA3NxHMX1GPoABO2RZhizLcHV24PChA//PIqutAFZbwXCcP3MWsnNyYgpEUfffAQ31v6Kl2TEcsxyPrKzJONdQD5bjwLJs9MOt63vamm9y0ifOgEGt+lhJU1tCkag/FI4E7nj6VsYDYiz64mAlIu12qPtroO6vQeXu7SAIAgRJgiRJtLffRmF+mvbrd59PHCckMqvnTdLySoXlzK7ShyZbjCkA8gGYADwB4IG7JgCAhdYMpKbwAID93zjhcDSh+sjnSEpKxqzZswEAapZG/pR0uILAwjlZg1aQijemP7xRw9ByFNHqqsbLbqfknXIXwF53DaJ64Efz9QeQnm5BYeESsByH3sGHj1fRWPF0bkwdQQJvzZiqSVUPHC5Tr+XXnv6lIgbwYslKtLS0wDsYr1rDxVg0FuWZkxPpBHI8FSUQUKh5XL7hSFi3+Z3uexV5utyK1QWZ7FhABM3zzwgTzVWWBY/rABD3+tj12+VosOFCvyiwofi91ttdTJpGHVBQlAwA/nCI9PhDPw01zAKQh1EuPU45zy1e8pLD0RQ0mdOYSxcaA+vKNgoEMdBm755PPUP5F4pK+f1VlYfGMi0AJAoazRqeV7e9WVYeNSaluExm806T2bzDZDbvGJkXRX05AMNYAUOapNPrD6tUqnn3y/8DAVvExTgxr/MAAAAASUVORK5CYII=" />
+            Office
+        </span>
+        <div *ngFor="let infoSumItem of infoSummaryLst"
+            class="summary-info-box">
+            <span class="summary-info-ttl">{{infoSumItem.Office}}</span><br>
+            <span class="summary-info-cnt">Count : {{infoSumItem.Count}}</span>
+            <span class="summary-info-lt">Lead Time : {{infoSumItem.Lead_Time}}</span>
+        </div>
+    </div>
+</div>
+<div *ngIf="infoSummaryLst&&btnSummaryLst&&homePageBtnLst1&&homePageBtnLst2">
+    <div class="row title-btns-summary">
+        <i class="flaticon-file"></i> {{btnSummaryLst.ButtonCaption}}
+    </div>
+    <div *ngFor="let sumItem of btnSummaryLst"
+        class="box-btns-summary"
+        (click)="onClickBtnsSummary(sumItem)">
+        <span style="height: 45px;">{{sumItem.ButtonCaption}}</span>
+        <span> ({{sumItem.Cnt}})</span>
+    </div>
+</div>
+
+
+<kendo-window [resizable]="false"
+    *ngIf="isOpenOrdersLst"
+    class="window-style-nav"
+    title="Order list for {{orderLstData.ButtonCaption}}"
+    (close)="isOpenOrdersLst=false">
+    <!-- <app-orders-list [data]="orderLstData"></app-orders-list> -->
+</kendo-window>
+
+<kendo-window [resizable]="false"
+    *ngIf="isOpentaskssLst"
+    class="window-style-nav"
+    title="Task list for {{taskDataForNav.ButtonCaption}}"
+    (close)="isOpentaskssLst=false">
+    <!-- <app-new-task-manager [dataForNav]="taskDataForNav"></app-new-task-manager> -->
+</kendo-window>

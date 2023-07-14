@@ -762,10 +762,10 @@
     <div class="main" id="main-content" [class.main-hide]="!sidebarFlag" [class.main-show]="sidebarFlag">
 
         <div *ngIf="isLoad" class="loading">Loading&#8230;</div>
+        <app-home-page *ngIf="itemClicked=='Home'"></app-home-page>
         <!-- <app-message-management *ngIf="itemClicked=='mainMenu-Notification'"></app-message-management>
         <app-user-management *ngIf="itemClicked=='mainMenu-UserManagement'"></app-user-management>
         <app-download-management *ngIf="itemClicked=='mainMenu-Download'"></app-download-management>
-        <app-home-page *ngIf="itemClicked=='Home'"></app-home-page>
         <app-tracker-page *ngIf="itemClicked=='mainMenu-Tracer'"></app-tracker-page>
         <app-designer-page *ngIf="itemClicked=='WorkflowDesigner'"></app-designer-page>
         <app-form-builder *ngIf="itemClicked=='FormBuilder'"></app-form-builder>

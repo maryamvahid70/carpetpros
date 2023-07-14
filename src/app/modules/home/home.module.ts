@@ -11,15 +11,23 @@ import { NotificationService } from '@progress/kendo-angular-notification';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelBarModule } from '@progress/kendo-angular-layout';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { AgGridModule } from 'ag-grid-angular-legacy';
 
 import { HomeComponent } from '../home/home.component';
 import { WikiHelpComponent } from '../home/help/wiki-help.component';
+import { HomePageComponent } from '../home/home-page/home-page.component';
+import { CpAlertComponent } from '../../general/cp-alert.component';
+import { ModalCallHistoryComponent } from './modal-call-history';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    WikiHelpComponent
+    WikiHelpComponent,
+    HomePageComponent,
+    CpAlertComponent,
+    ModalCallHistoryComponent
   ],
   imports: [
     CommonModule,
@@ -32,13 +40,17 @@ import { WikiHelpComponent } from '../home/help/wiki-help.component';
     ButtonsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    PanelBarModule
+    PanelBarModule,
+    MatDatepickerModule,
+    // AgGridModule.withComponents([])
   ],
   providers: [
-    NotificationService
+    NotificationService,
+    MatDatepickerModule
   ],
   exports: [
     MatFormFieldModule,
+    MatDatepickerModule
   ]
 })
 export class HomeModule {}
