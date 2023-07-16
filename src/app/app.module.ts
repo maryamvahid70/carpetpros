@@ -10,17 +10,19 @@ import { AccountModule } from './modules/account/account.module';
 import { AppConfigService } from './app-config.service';
 import { TransferServices } from './general/services/config.service';
 import { HomeModule } from './modules/home/home.module';
+import { SharedModule } from './shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     AccountModule,
-    HomeModule
+    HomeModule,
+    SharedModule.forRoot()
   ],
   providers: [
     AuthGuard,

@@ -882,7 +882,7 @@
 
 <kendo-window *ngIf="isOpenCallhistory" class="window-style-call-history" title="Call history of extension# {{extentionNo}}"
     (close)="onCloseCallHistory()">
-    <!-- <modal-call-history [(onClose)]="isOpenCallhistory"></modal-call-history> -->
+    <modal-call-history [onClose]="isOpenCallhistory"></modal-call-history>
 </kendo-window>
 
 <kendo-window [resizable]="false" *ngIf="isOpenWindowOrderMngNav" class="window-style-order-nav">

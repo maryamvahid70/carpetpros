@@ -43,7 +43,7 @@
     </kendo-tabstrip-tab>
     <kendo-tabstrip-tab [title]="'Contacts'">
         <ng-template kendoTabContent>
-            <input style="margin-right: 20px;" [ngModel]="filterText" *ngIf="gridApiCFBtelAgents"
+            <input style="margin-right: 20px;" *ngIf="gridApiCFBtelAgents"
             (ngModelChange)="gridApiCFBtelAgents.setQuickFilter($event)" placeholder="Filter ..." />
 
             <ag-grid-angular #logGrid style="width: 100%; height: 60vh;" class="ag-theme-balham"

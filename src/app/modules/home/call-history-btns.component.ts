@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ICellRendererAngularComp } from "ag-grid-angular-legacy";
 import { BsModalRef, ModalOptions, BsModalService } from 'ngx-bootstrap/modal';
-import { ModalPhonePanelComponent } from "../modal-phone-panel/modal-phone-panel.component";
+// import { ModalPhonePanelComponent } from "../modal-phone-panel/modal-phone-panel.component";
 import { TransferServices } from 'src/app/general/services/config.service';
 
 @Component({
@@ -66,8 +66,8 @@ export class CallHistoryButtonsComponent implements ICellRendererAngularComp, On
                 type: 'nav'
             }
         };
-        this.bsModalRef = this.bsModalService.show(ModalPhonePanelComponent, Object.assign({ initialState }, modalConfigDefaults, { class: 'customClass-fit-content' })
-        );
+        // this.bsModalRef = this.bsModalService.show(ModalPhonePanelComponent, Object.assign({ initialState }, modalConfigDefaults, { class: 'customClass-fit-content' })
+        // );
     }
 
     onDial(){

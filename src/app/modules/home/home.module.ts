@@ -12,13 +12,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelBarModule } from '@progress/kendo-angular-layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { AgGridModule } from 'ag-grid-angular-legacy';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { HomeComponent } from '../home/home.component';
 import { WikiHelpComponent } from '../home/help/wiki-help.component';
 import { HomePageComponent } from '../home/home-page/home-page.component';
-import { CpAlertComponent } from '../../general/cp-alert.component';
 import { ModalCallHistoryComponent } from './modal-call-history';
+import { SharedModule } from 'src/app/shared.module';
 
 
 @NgModule({
@@ -26,7 +26,6 @@ import { ModalCallHistoryComponent } from './modal-call-history';
     HomeComponent,
     WikiHelpComponent,
     HomePageComponent,
-    CpAlertComponent,
     ModalCallHistoryComponent
   ],
   imports: [
@@ -42,7 +41,8 @@ import { ModalCallHistoryComponent } from './modal-call-history';
     BrowserAnimationsModule,
     PanelBarModule,
     MatDatepickerModule,
-    // AgGridModule.withComponents([])
+    AgGridModule,
+    SharedModule
   ],
   providers: [
     NotificationService,

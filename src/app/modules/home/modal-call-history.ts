@@ -46,7 +46,7 @@ export class ModalCallHistoryComponent implements OnInit {
     public VoiceSrc: string = "";
     public downloadmessage: string = "For listen click play button .";
     public isClose: boolean = true;
-    public rowGroupPanelShow;
+    public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
     public autoGroupColumnDef;
     public loadSearchtBtn = false;
     public CFBtelAgentsData:any;
@@ -80,8 +80,6 @@ export class ModalCallHistoryComponent implements OnInit {
             enableRowGroup: true
         };
 
-        this.rowGroupPanelShow = "always";
-
         this.autoGroupColumnDef = {
             minWidth: 200
         };
@@ -91,9 +89,10 @@ export class ModalCallHistoryComponent implements OnInit {
             { field: "source", headerName: "Phone No", width: 80 , cellStyle: { padding: '0px' }, cellClass: 'link-style' },
             {
                 field: "callername", headerName: "Name", width: 200 , cellStyle: { padding: '0px' },
-                cellClass: function (params: any) {
+                cellClass: (params:any)=> {
                     if (params.data && params.data.callername != "UNKNOWN")
                         return "link-style";
+                    else return;
                 }
             },
             { field: "type", headerName: "Type" , width: 100, cellStyle: { padding: '0px' } },
